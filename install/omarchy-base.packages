@@ -1,10 +1,8 @@
 # Omarchy core package list installed via install/packaging/base.sh
 # This file is also used by the ISO builder when determining needs
 
-1password-beta
-1password-cli
 aether
-alacritty
+alacrity
 asdcontrol
 avahi
 bash-completion
@@ -136,3 +134,10 @@ xournalpp
 yaru-icon-theme
 yay
 zoxide
+
+tmux
+sesh-bin
+ghostty
+yazi
+zen-browser-bin
+wlogout

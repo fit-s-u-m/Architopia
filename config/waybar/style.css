@@ -1,83 +1,314 @@
-@import "../omarchy/current/theme/waybar.css";
+/* Catppuccin Mocha */
 
 * {
-  background-color: @background;
-  color: @foreground;
-
-  border: none;
-  border-radius: 0;
-  min-height: 0;
-  font-family: 'CaskaydiaMono Nerd Font';
-  font-size: 12px;
+	font-family: "JetBrainsMono Nerd Font";
+	font-weight: bold;
+	min-height: 0;
+	font-size: 96%;
+	font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
 }
 
-.modules-left {
-  margin-left: 8px;
+@import "./theme.css";
+
+window#waybar {
+  	transition-property: background-color;
+  	transition-duration: 0.5s;
+  	background: transparent;
+  	border-radius: 10px;
 }
 
-.modules-right {
-  margin-right: 8px;
+window#waybar.hidden {
+  	opacity: 0.2;
 }
 
+window#waybar.empty,
+window#waybar.empty #window {
+    background-color: transparent;
+    padding: 0px;
+    border: 0px;
+}
+
+#taskbar button,
 #workspaces button {
-  all: initial;
-  padding: 0 6px;
-  margin: 0 1.5px;
-  min-width: 9px;
+    background-color: transparent;
+    color: @overlay1;
+    box-shadow: none;
+    text-shadow: none;
+    padding: 0px;
+    border-radius: 10px;
+    animation: gradient_f 20s ease-in infinite;
+    transition: all 0.5s cubic-bezier(.55,-0.68,.48,1.682);
 }
 
-#workspaces button.empty {
-  opacity: 0.5;
+#taskbar button:hover,
+#workspaces button:hover {
+    border-radius: 10px;
+    color: @peach;
+    background-color: @surface0;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-right: 3px;
+    animation: gradient_f 20s ease-in infinite;
+    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
 }
 
-#cpu,
+#workspaces button.persistent {
+	color: @surface1;
+	border-radius: 10px;
+}
+
+#taskbar button.active,
+#workspaces button.active {
+    background-color: @base;
+    color: @mauve;
+    border-radius: 10px;
+    padding-left: 6px;
+    padding-right: 6px;
+    animation: gradient_f 20s ease-in infinite;
+    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
+}
+
+#workspaces button.urgent {
+	background-color: @red;
+ 	border-radius: 0px;
+}
+
+/* This section can be use if you want to separate waybar modules */
+.modules-left, .modules-center, .modules-right {
+        background: rgba(255, 255, 255, 0.4);
+ 	border: 1px solid @overlay0;
+	padding: 2px 2px ;
+        margin:0;
+	border-radius: 5px;
+}
+
+#backlight,
 #battery,
+#bluetooth,
+#custom-cava,
+#custom-cliphist,
+#clock,
+#custom-cpuinfo,
+#cpu,
+#custom-github_hyde,
+#custom-gpuinfo,
+#custom-hyprsunset,
+#idle_inhibitor,
+#custom-keybindhint,
+#language,
+#memory,
+#mpris,
+#network,
+#custom-notifications,
+#custom-power,
+#privacy,
 #pulseaudio,
-#custom-omarchy,
-#custom-screenrecording-indicator,
-#custom-update {
-  min-width: 12px;
-  margin: 0 7.5px;
+#custom-sensorsinfo,
+#custom-spotify,
+#taskbar,
+#taskbar,
+#taskbar,
+#taskbar#windows,
+#custom-theme,
+#tray,
+#custom-updates,
+#custom-wallchange,
+#custom-wbar,
+#custom-weather,
+#window,
+#workspaces,
+#workspaces,
+#workspaces,
+#custom-l_end,
+#custom-r_end,
+#custom-sl_end,
+#custom-sr_end,
+#custom-rl_end,
+#custom-ethiopian_day,
+#custom-rr_end {
+        background: rgba(0, 0, 0, 0.6);
+        opacity:1;
+        padding: 2px 3px;
 }
 
-#tray {
-  margin-right: 16px;
+#bluetooth,
+#backlight {
+  color: @blue;
 }
 
-#bluetooth {
-  margin-right: 17px;
+#battery {
+  color: @green;
 }
 
-#network {
-  margin-right: 13px;
+@keyframes blink {
+  to {
+    color: @maroon;
+  }
 }
 
-#custom-expand-icon {
-  margin-right: 20px;
-}
-
-tooltip {
-  padding: 2px;
-}
-
-#custom-update {
-  font-size: 10px;
+#battery.critical:not(.charging) {
+  background-color: @red;
+  color: @theme_text_color;
+  animation-name: blink;
+  animation-duration: 2.0s;
+  animation-timing-function: steps(12);
+  animation-iteration-count: infinite;
+  box-shadow: inset 0 -3px transparent;
+  border-radius:5px;
 }
 
 #clock {
-  margin-left: 8.75px;
+  color: @yellow;
 }
 
-.hidden {
-  opacity: 0;
+#cpu {
+  color: @green;
 }
 
-#custom-screenrecording-indicator {
-  min-width: 12px;
-  margin-left: 8.75px;
-  font-size: 10px;
+#custom-keyboard,
+#memory {
+  color: @sky;
 }
 
-#custom-screenrecording-indicator.active {
-  color: #a55555;
+#disk {
+  color: @sapphire;
+}
+
+#temperature {
+  color: @teal;
+}
+
+#temperature.critical {
+  background-color: @red;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+}
+
+#keyboard-state {
+  color: @flamingo;
+}
+
+#custom-cava_mviz {
+	color: @pink;
+}
+
+#custom-menu {
+  color: @rosewater;
+}
+
+#custom-power {
+  color: @red;
+}
+
+#custom-updater {
+  color: @red;
+}
+
+#custom-light_dark {
+  color: @blue;
+}
+
+#custom-weather {
+  color: @lavender;
+}
+
+#custom-lock {
+  color: @maroon;
+}
+
+#pulseaudio {
+  color: @sapphire;
+}
+
+#pulseaudio.bluetooth {
+  color: @pink;
+}
+#pulseaudio.muted {
+  color: @red;
+}
+
+#window {
+  color: @mauve;
+}
+
+#mpris {
+  color:@lavender;
+}
+
+#network {
+  color: @teal;
+  background: rgba(0, 0, 0, 0.6);
+}
+#network.disconnected,
+#network.disabled {
+  background-color: transparent;
+  color: @text;
+}
+
+#backlight-slider slider,
+#pulseaudio-slider slider {
+	min-width: 0px;
+	min-height: 0px;
+	opacity: 0;
+	background-image: none;
+	border: none;
+	box-shadow: none;
+}
+
+#backlight-slider trough,
+#pulseaudio-slider trough {
+	min-width: 80px;
+	min-height: 5px;
+	border-radius: 5px;
+}
+
+#backlight-slider highlight,
+#pulseaudio-slider highlight {
+	min-height: 10px;
+	border-radius: 5px;
+}
+
+#custom-r_end {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 3px;
+    padding-right: 0px;
+}
+
+#custom-l_end {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+#custom-sr_end {
+    border-radius: 0px;
+    margin-right: 3px;
+    padding-right: 0px;
+}
+
+#custom-sl_end {
+    border-radius: 0px;
+    margin-left: 3px;
+    padding-left: 0px;
+}
+
+#custom-rr_end {
+    border-radius: 0px 7px 7px 0px;
+    margin-right: 3px;
+    padding-right: 0px;
+}
+
+#custom-rl_end {
+    border-radius: 7px 0px 0px 7px;
+    margin-left: 3px;
+    padding-left: 0px;
+}
+tooltip {
+  text-shadow: none;
+  background: rgba(0, 0, 0, 0.8);
 }
