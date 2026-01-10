@@ -1,0 +1,304 @@
+exit
+ls
+exit
+ls
+l
+ls
+starship explain 
+q
+exit
+y
+ff
+z
+z path
+z 
+z - 
+z nix
+exit
+atuin init nu | save ~/.local/share/atuin/init.nu<\n>
+exit
+ls
+exit
+date
+date humanize 
+ls
+ls | where type file 
+ls | where type=file
+ls | where type==file
+ls | where Type=file
+help where
+ls | where type == file
+^ls
+^s
+is
+s
+ls *md
+ls
+ls *mkv
+ls *go
+ls *g
+ls *g*
+ls ***t
+mkdir mydir/test/test/test
+l
+cd my-nix/
+ls
+cd host
+cd scripts/
+ls
+cd ...
+cd ../etc
+cd .../etc
+cd
+echo "hello" > test.txt
+ls
+cattest.txt
+cat test.txt
+echo "hello" > test.txt
+"hello" | save test.txt
+cat test.txt
+echo "ehlo"
+exit
+s
+l
+v test.ts
+starship Desktop/
+path add /run/current-system/sw/bin
+starship
+s
+l
+v
+nh os switch
+nh os switch .
+sudo nixos-rebuild --flake .
+ls -l /run/current-system/sw/bin/sudo<\n>
+chmod 4755 /run/current-system/sw/bin/sudo<\n>
+mount | grep " / "<\n>
+mount 
+mount | grep " / "<\n>
+fsck /dev/sdXn<\n>
+fsck /dev/nvme0n1p
+fsck /dev/nvme0n1
+sudo fsck /dev/nvme0n1
+l
+z nix
+l
+cd
+cd my-nix/
+nh os switch .
+starship
+sudo nixos-rebuild --flake .#nixos
+shutdown 
+shutdown -c
+shutdown -now
+shutdown --now
+ls
+starship
+sudo 
+nh os switch .
+s 
+l
+fish
+v
+z nix
+sudo diff -ru /nix/var/nix/profiles/system-{GEN1}-link /nix/var/nix/profiles/system-{GEN2}-link<\n>
+echo $SHELL<\n>
+echo $env.SHELL
+ls -ld /home/<username><\n>
+ls -ld /home/fitsum
+v
+ls
+nh os switch .
+lsblk
+v
+sudo nix-env --list-generations<\n>
+nix-env -iA nixos.nix-diff<\n>
+ls
+l
+ls
+systemctl status auto-cpufreq<\n>
+aplay -l<\n>
+lsmod | grep snd<\n>
+journalctl -b | grep -i audio<\n>
+sudo usermod -aG audio fitsum
+sudo 
+sudo usermod -aG audio your-username<\n>
+ls -l /run/current-system/sw/bin/sudo<\n>
+sudo chown root:root /run/current-system/sw/bin/sudo<\n>sudo chmod u+s /run/current-system/sw/bin/sudo<\n>
+ls -l /run/current-system/sw/bin/sudo<\n>
+ls /run/current-system/sw/bin/sudo
+ls -l /run/current-system/sw/bin/sudo
+exit
+l
+journalctl -xe<\n>
+nh os switch 
+ls
+cd
+cd my-nix/
+ls
+nh os switch .
+sudo chown root:root /run/current-system/sw/bin/sudo<\n>sudo chmod u+s /run/current-system/sw/bin/sudo<\n>
+ls
+sudo ls
+nh os switch
+z nix
+nh os switch .
+mvn
+suod
+sudo ls
+ls
+ls -a
+l
+ls
+la
+ls -a
+ls
+ls | where name="squid"
+ls | where name = "squid"
+ls
+ls | grep "squid"
+ls | grep "s"
+ls | grep "Squid"
+ls | grep "Squid" l
+l
+ls
+exit
+ls
+tmux 
+ls
+ls | grep "hello"
+ls
+q
+nano ~/.config/mimeapps.list<\n>
+clear
+http localhost:3000/hello
+man http
+http -h
+http get localhost:3000/hello
+http get http://localhost:3000/hello
+q
+exit 
+mkdir ~/.local/share/atuin/<\n>atuin init nu | save ~/.local/share/atuin/init.nu
+q
+exit
+clear
+fjdskfj
+fkjfjasd
+gc
+gsgt
+gst
+gc
+git comit 
+git commit
+clear
+git status
+clear
+l
+clear
+gst
+clear
+open src/main.rs
+ls
+ls | where type == file
+clear
+[1,2,3]
+ls
+http get http://localhost:3000/hello
+http get http://localhost:3000/greet  {name:"fitsum"}
+http -h
+http post -h
+http post  http://localhost:3000/greet  "{name:"fitsum"}"
+http post  http://localhost:3000/greet  '{name:"fitsum"}'
+http post  http://localhost:3000/greet  '{"name":"fitsum"}'
+http post  http://localhost:3000/greet  '{name:fitsum}'
+http post  http://localhost:3000/greet  {name:fitsum}
+http post  http://localhost:3000/greet  { name: fitsum }
+http post --content-type application/json https://www.example.com { field: value }<\n>
+http post --content-type application/json https://localhost:3000/greet { name: fitsum }
+http post --content-type application/json http://localhost:3000/greet { name: fitsum }
+http post http://localhost:3000/greet { name: fitsum }
+http post --content-type application/json http://localhost:3000/greet { name: fitsum }
+clear
+http post --content-type application/json http://localhost:3000/greet { name: fitsum }
+http get http://localhost:3000/hello/fitsum
+http get http://localhost:3000/greet/fitsum
+clear
+http get http://localhost:3000/greet/fitsum
+http post --content-type application/json http://localhost:3000/greet { name: fitsum }
+clear
+xh get http://localhost:3000/greet/fitsum
+clear
+xh post http://localhost:3000/greet {name:fitsum}
+xh post http://localhost:3000/greet "{name:fitsum}"
+xh post :3000/greet name=fitsum
+clear
+xh get :3000/todos
+xh post :3000/addTodo title= make your bed
+xh post :3000/addTodo title=work
+xh post :3000/addTodo title=work_time
+xh get :3000/todos
+xh delete :3000/todos/work
+xh delete :3000/todos/1
+xh delete :3000/todos/work
+xh post :3000/addTodo title=work_time
+xh post :3000/addTodo title=work
+xh delete :3000/todos/work
+clear
+xh get :3000/todos
+xh delete :3000/todos/1
+clear
+xh post :3000/addTodo title=work
+xh put :3000/todos/1 title=works
+xh get :3000/todos
+xh post :3000/addTodo title=work
+xh get :3000/todos
+xh put :3000/todos/1 title=works
+xh get :3000/todos
+xh post :3000/addTodo title=work
+xh get :3000/todos
+xh put :3000/todos/1 title=works
+xh get :3000/todos
+clear
+cargo build
+v
+ga
+gAdd
+gadd 
+git status
+gca 
+git add .
+fg
+git add .
+fg
+clear
+ls
+clear
+ls
+gst
+git add .
+rm -f .git/index.lock<\n>
+ls
+git add .
+exit
+ls
+find -Rn
+man find
+find ".tsx" .
+q
+exit
+clear
+cd postgres/
+sudo cd postgres/
+cd -s postgres/
+cd --help
+chsh
+clear
+ls
+exit
+mkdir ~/.local/share/atuin/<\n>atuin init nu | save ~/.local/share/atuin/init.nu
+exit
+eit
+exit
+clear
+ls
+exit

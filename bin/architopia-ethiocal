@@ -1,0 +1,220 @@
+#! /usr/bin/env python
+
+import datetime 
+import sys
+
+"""
+This is all copied and adjusted from Kenat python library
+"""
+
+def format_with_time(et_date, time_obj, lang='amharic'):
+    """
+    Formats an Ethiopian date and time as a string.
+    Example: "መስከረም 10 2016 08:30 ጠዋት" 
+    """
+    base = format_standard(et_date, lang)
+    time_string = time_obj.format(lang=lang, use_geez=False, zero_as_dash=False)  
+    return f"{base} {time_string}" 
+
+def get_weekday(eth_date):
+    """
+    Returns the weekday (0=Sunday, 6=Saturday) for a given Ethiopian date.
+    """
+    # Import locally to prevent circular dependency with the 'conversions' module
+    g = to_gc(eth_date['year'], eth_date['month'], eth_date['day'])
+    # The getDay() method in JS returns 0 for Sunday, which matches Python's isoweekday() % 7 behavior.
+    # Python's weekday() is 0 for Monday. JS getDay() is 0 for Sunday.
+    # The source new Date(...).getDay() is 0 for Sunday.
+    return (g.isoweekday() % 7)
+
+def format_with_weekday(et_date, lang='amharic', use_geez=False):
+    """
+    Formats a date with the weekday name, month name, day, and year. 
+    Example: "ማክሰኞ, መስከረም 1 2016" 
+    """
+    weekday_index = get_weekday(et_date) 
+    weekday_name = DAYS_OF_WEEK.get(lang, DAYS_OF_WEEK['amharic'])[weekday_index] 
+    month_name = MONTH_NAMES.get(lang, MONTH_NAMES['amharic'])[et_date['month'] - 1] 
+    day =et_date['day']
+    year = et_date['year']
+
+    return f"{weekday_name}, {month_name} {day} {year}" 
+
+# Core functions
+def to_gc(eth_year, eth_month, eth_day):
+    """
+    Converts an Ethiopian date to its corresponding Gregorian date.
+
+    Args:
+        eth_year (int): The Ethiopian year.
+        eth_month (int): The Ethiopian month (1-13).
+        eth_day (int): The Ethiopian day.
+
+    Returns:
+        datetime.date: The equivalent Gregorian date object.
+    """
+    # 1. Validate input types and date range 
+    validate_numeric_inputs('to_gc', eth_year=eth_year, eth_month=eth_month, eth_day=eth_day)
+    if not 1 <= eth_month <= 13 or not 1 <= eth_day <= get_ethiopian_days_in_month(eth_year, eth_month):
+        raise InvalidEthiopianDateError(eth_year, eth_month, eth_day)
+
+    # 2. Determine the Gregorian date of the Ethiopian New Year 
+    gregorian_year = eth_year + 7
+    new_year_day = 12 if is_gregorian_leap_year(gregorian_year + 1) else 11
+    new_year_date = datetime.date(gregorian_year, 9, new_year_day)
+
+    # 3. Calculate days elapsed since the Ethiopian new year and add to the new year date 
+    days_to_add = (eth_month - 1) * 30 + (eth_day - 1)
+    
+    return new_year_date + datetime.timedelta(days=days_to_add)
+
+
+# Utils got from kenat
+def is_ethiopian_leap_year(year):
+    """
+    Checks if the given Ethiopian year is a leap year.
+    Ethiopian leap years happen when the year modulo 4 equals 3.
+    """
+    return year % 4 == 3
+
+def get_ethiopian_days_in_month(year, month):
+    """
+    Returns the number of days in the given Ethiopian month and year.
+    """
+    if month == 13:
+        return 6 if is_ethiopian_leap_year(year) else 5
+    return 30
+
+def is_gregorian_leap_year(year):
+    """
+    Checks if the given Gregorian year is a leap year.
+    Leap years occur every 4 years, except for centuries not divisible by 400.
+    """
+    return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+
+# Errors and exceptions
+class KenatError(Exception):
+    """Base class for all custom errors in the Kenat library."""
+    def __init__(self, message):
+        super().__init__(message)
+        self.name = self.__class__.__name__
+
+class InvalidInputTypeError(KenatError):
+    """Thrown when a function receives an argument of an incorrect type."""
+    def __init__(self, function_name, parameter_name, expected_type, received_value):
+        received_type = type(received_value).__name__
+        message = (f"Invalid type for parameter '{parameter_name}' in function '{function_name}'. "
+                   f"Expected '{expected_type}' but got '{received_type}'.")
+        super().__init__(message)
+        self.function_name = function_name 
+        self.parameter_name = parameter_name 
+        self.expected_type = expected_type 
+        self.received_value = received_value 
+
+class InvalidEthiopianDateError(KenatError):
+    """Thrown when an Ethiopian date is numerically invalid (e.g., month 14)."""
+    def __init__(self, year, month, day):
+        super().__init__(f"Invalid Ethiopian date: {year}/{month}/{day}")
+        self.date = {'year': year, 'month': month, 'day': day}
+
+class InvalidGregorianDateError(KenatError):
+    """Thrown when a Gregorian date is numerically invalid."""
+    def __init__(self, year, month, day):
+        super().__init__(f"Invalid Gregorian date: {year}/{month}/{day}")
+        self.date = {'year': year, 'month': month, 'day': day}
+
+# Validation
+def validate_numeric_inputs(func_name, **kwargs):
+    """
+    Validates that all provided keyword arguments are numbers.
+    
+    Raises:
+        InvalidInputTypeError: If any value is not a number.
+    """
+    for name, value in kwargs.items():
+        if not isinstance(value, (int, float)) or value != value: # Checks for NaN
+            raise InvalidInputTypeError(func_name, name, 'number', value)
+
+
+#Constants
+MONTH_NAMES = {
+  "english": [
+    "Meskerem", "Tikimt", "Hidar", "Tahsas", "Tir", "Yekatit",
+    "Megabit", "Miazia", "Ginbot", "Sene", "Hamle", "Nehase", "Pagume"
+  ],
+  "amharic": [
+    "መስከረም", "ጥቅምት", "ህዳር", "ታህሳስ", "ጥር", "የካቲት",
+    "መጋቢት", "ሚያዝያ", "ግንቦት", "ሰኔ", "ሀምሌ", "ነሐሴ", "ጳጉሜ"
+  ],
+  "gregorian": [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ],
+}
+DAYS_OF_WEEK = {
+  "english": [
+    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+  ],
+  "amharic": [
+    "እሑድ", "ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ"
+  ],
+}
+
+def format_standard(et_date, lang='amharic'):
+    """
+    Formats an Ethiopian date using a language-specific month name and Arabic numerals.
+    Example: "መስከረም 10 2016" 
+    """
+    names = MONTH_NAMES.get(lang, MONTH_NAMES['amharic']) 
+    month_name = names[et_date['month'] - 1] 
+    return f"{month_name} {et_date['day']}" 
+def format_standard_full(et_date, lang='amharic'):
+    """
+    Formats an Ethiopian date using a language-specific month name and Arabic numerals.
+    Example: "መስከረም 10 2016" 
+    """
+    names = MONTH_NAMES.get(lang, MONTH_NAMES['amharic']) 
+    month_name = names[et_date['month'] - 1] 
+    return f"{month_name} {et_date['day']}" 
+def to_ec(greg_year, greg_month, greg_day):
+    """
+    Converts a Gregorian date to the Ethiopian calendar (EC) date.
+    """
+    # 1. Validate input types
+    validate_numeric_inputs('to_ec', g_year=greg_year, g_month=greg_month, g_day=greg_day)
+    
+    # 2. Validate date validity and range (1900-2100) to match original library
+    try:
+        greg_date = datetime.date(greg_year, greg_month, greg_day)
+        if not (datetime.date(1900, 1, 1) <= greg_date <= datetime.date(2100, 12, 31)):
+             raise InvalidGregorianDateError(greg_year, greg_month, greg_day)
+    except (ValueError, InvalidGregorianDateError): # Catch both invalid dates and out-of-range
+        raise InvalidGregorianDateError(greg_year, greg_month, greg_day)
+
+    # 3. Determine the corresponding Ethiopian year
+    eth_year = greg_year - 8
+    greg_of_eth_new_year = to_gc(eth_year + 1, 1, 1)
+    if greg_date >= greg_of_eth_new_year:
+        eth_year += 1
+
+    # 4. Calculate the difference in days from that Ethiopian New Year
+    new_year_greg_date = to_gc(eth_year, 1, 1)
+    days_diff = (greg_date - new_year_greg_date).days
+    
+    # 5. Convert the day difference into Ethiopian month and day
+    eth_month = (days_diff // 30) + 1
+    eth_day = (days_diff % 30) + 1
+    
+    return {'year': eth_year, 'month': eth_month, 'day': eth_day}
+
+arg = sys.argv
+if(arg.__len__() > 1) :
+    if ( arg[1] == "full"):
+        today_greg = datetime.datetime.now()
+        today_ethio = to_ec(today_greg.year, today_greg.month, today_greg.day)
+        print(format_with_weekday(today_ethio))
+
+else :
+    today_greg = datetime.datetime.now()
+    today_ethio = to_ec(today_greg.year, today_greg.month, today_greg.day)
+    print(format_standard(today_ethio))

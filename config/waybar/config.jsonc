@@ -7,26 +7,66 @@
   "passthrough": false,
   "gtk-layer-shell": true,
   "reload_style_on_change": true,
-
-  "modules-left": ["custom/padd","custom/l_end","cpu","memory","custom/cpuinfo","custom/r_end"],
-  "modules-center": ["custom/padd","custom/l_end","custom/ethiopian_day","clock","custom/r_end","custom/padd"],
-  "modules-right": ["custom/padd","custom/l_end","network","custom/r_end","custom/l_end","backlight","pulseaudio","pulseaudio#microphone","custom/updates","custom/r_end","custom/l_end","bluetooth","privacy","tray" ,"custom/r_end"],
-
+  "modules-left": [
+    "custom/padd",
+    "custom/l_end",
+    "cpu",
+    "memory",
+    "custom/cpuinfo",
+    "custom/r_end"
+  ],
+  "modules-center": [
+    "custom/padd",
+    "custom/l_end",
+    "custom/ethiopian_day",
+    "custom/r_end",
+    "custom/l_end",
+    "clock",
+    "custom/r_end",
+    "custom/padd"
+  ],
+  "modules-right": [
+    "custom/padd",
+    "custom/l_end",
+    "network",
+    "custom/r_end",
+    "custom/l_end",
+    "backlight",
+    "pulseaudio",
+    "pulseaudio#microphone",
+    "custom/updates",
+    "custom/r_end",
+    "custom/l_end",
+    "bluetooth",
+    "privacy",
+    "tray",
+    "custom/r_end"
+  ],
   "cpu": {
     "interval": 10,
     "format": "󰍛 {usage}%",
-    "format-icons": ["▁","▂","▃","▄","▅","▆","▇","█"]
+    "format-icons": [
+      "▁",
+      "▂",
+      "▃",
+      "▄",
+      "▅",
+      "▆",
+      "▇",
+      "█"
+    ]
   },
-
   "memory": {
     "interval": 30,
     "format": "󰾆 {used}GB",
     "format-alt": "󰾆 {percentage}%",
     "tooltip-format": "󰾆 {percentage}%\n {used:0.1f}GB/{total:0.1f}GB",
-    "states": { "c": 90, "h": 60, "m": 30 }
+    "states": {
+      "c": 90,
+      "h": 60,
+      "m": 30
+    }
   },
-
-
   "clock": {
     "format": "{:%d • %H:%M}",
     "format-alt": "{:%R 󰃭 %d·%m·%y}",
@@ -36,7 +76,6 @@
       "mode-mon-col": 3
     }
   },
-
   "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
@@ -45,22 +84,29 @@
     "on-scroll-up": "hyprctl dispatch workspace -1",
     "on-scroll-down": "hyprctl dispatch workspace +1"
   },
-
   "backlight": {
     "device": "intel_backlight",
     "format": "{icon} {percent}%",
-    "format-icons": ["","","","","","","","",""],
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
     "on-scroll-up": "brightnessctl set 1%+",
     "on-scroll-down": "brightnessctl set 1%-"
   },
-
   "network": {
     "format-wifi": " <span foreground='#ffffff'> {bandwidthDownBytes}</span> <span foreground='#ffffff'> {bandwidthUpBytes}</span>",
     "format-ethernet": "󰈀 <span foreground='#ffffff'> {bandwidthDownBytes}</span> <span foreground='#ffffff'> {bandwidthUpBytes}</span>",
     "format-disconnected": "<span foreground='#ffffff'>󰖪 No Network</span>",
     "interval": 2
   },
-
   "pulseaudio": {
     "format": "{icon} {volume}",
     "format-muted": "󰸈",
@@ -69,15 +115,20 @@
     "on-scroll-up": "volumecontrol.sh -o i",
     "on-scroll-down": "volumecontrol.sh -o d",
     "tooltip-format": "{icon} {desc} // {volume}%",
-    "format-icons": { "default": ["","",""] }
+    "format-icons": {
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    }
   },
   "custom/ethiopian_day": {
-    "exec": "ethiocal day",
-    "interval": 60,
-    "format": "{:>2} • ",              // shows only day in the bar
-    "tooltip": false,
+    "exec": "echo $(architopia-ethiocal); architopia-ethiocal full",
+    "interval": 3600,
+    "format": "{}",
+    "tooltip": true
   },
-
   "pulseaudio#microphone": {
     "format": "{format_source}",
     "format-source": "",
@@ -85,16 +136,26 @@
     "on-click": "pavucontrol -t 4",
     "tooltip-format": "{format_source} {source_desc} // {source_volume}%"
   },
-
-  "tray": { "icon-size": 18, "spacing": 5 },
-
+  "tray": {
+    "icon-size": 18,
+    "spacing": 5
+  },
   "battery": {
     "format": "{icon} {capacity}%",
     "format-charging": " {capacity}%",
-    "states": { "good": 95, "warning": 30, "critical": 20 }
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 20
+    }
   },
-
-  "custom/padd": { "format": "  " },
-  "custom/l_end": { "format": " " },
-  "custom/r_end": { "format": " " }
+  "custom/padd": {
+    "format": "  "
+  },
+  "custom/l_end": {
+    "format": " "
+  },
+  "custom/r_end": {
+    "format": " "
+  }
 }
