@@ -2,12 +2,10 @@
 # This file is also used by the ISO builder when determining needs
 
 aether
-alacrity
 asdcontrol
 avahi
 bash-completion
 bat
-blueberry
 brightnessctl
 btop
 cargo
@@ -136,8 +134,6 @@ yay
 zoxide
 
 tmux
-sesh-bin
 ghostty
 yazi
-zen-browser-bin
-wlogout
+typst
