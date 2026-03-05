@@ -217,7 +217,7 @@ $env.config = {
     use_ansi_coloring: true
     bracketed_paste: true # enable bracketed paste, currently useless on windows
 
-    edit_mode: vi # emacs, vi
+    # edit_mode: vi # emacs, vi
 
     plugin_gc: {
         # Configuration for plugin garbage collection
