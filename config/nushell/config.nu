@@ -261,6 +261,7 @@ alias ll = ls -l
 alias lt = eza --tree --level=2 --long --icons --git
 alias v = nvim
 alias fg = job unfreeze
+alias s = sesh connect (sesh list | fzf | str trim)
 
 # Git
 alias gc = git commit
